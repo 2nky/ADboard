@@ -27,3 +27,7 @@ class OneTimeCode(models.Model):
         otp_code.save()
 
         return otp_code
+
+    class Meta:
+        verbose_name = "Одноразовый код"
+        verbose_name_plural = "Одноразовые коды"
