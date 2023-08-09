@@ -10,6 +10,9 @@ class AdvertType(Model):
         blank=False,
     )
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         verbose_name = "Категория объявления"
         verbose_name_plural = "Категории объявлений"
@@ -45,6 +48,9 @@ class Advert(Model):
         null=False,
         blank=False,
     )
+
+    def __str__(self):
+        return f"{self.author.username}: {self.header} [{self.category.name}]"
 
     class Meta:
         verbose_name = "Объявление"
