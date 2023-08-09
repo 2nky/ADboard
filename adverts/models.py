@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Model
 
@@ -15,6 +16,13 @@ class AdvertType(Model):
 
 
 class Advert(Model):
+    author = models.ForeignKey(
+        User,
+        verbose_name="Автор объявления",
+        null=False,
+        blank=False,
+        on_delete=models.CASCADE,
+    )
     category = models.ForeignKey(
         AdvertType,
         verbose_name="Категория",
