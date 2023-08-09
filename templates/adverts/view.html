@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% load django_bootstrap5 %}
+
+{% block content %}
+    <h2>{{ advert.header }}</h2>
+    <div>
+        <b>Автор:</b> <b><i>{{ advert.author.username }}</i></b>
+    </div>
+    <div>
+        <b>Категория:</b> {{ advert.category.name }}
+    </div>
+    <div><b>Текст:</b></div>
+    <div>
+    {{ advert.text }}
+    </div>
+{% endblock %}

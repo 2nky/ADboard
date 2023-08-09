@@ -4,12 +4,19 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from adverts.forms import NewAdvertForm
-from adverts.models import Advert
+from adverts.models import Advert, AdvertType
 
 
 def index(request):
     all_adverts = Advert.objects.all().order_by("-created_at")
-    return render(request, "adverts/list.html", context={"adverts": all_adverts})
+    return render(
+        request,
+        "adverts/list.html",
+        context={
+            "adverts": all_adverts,
+            "categories": AdvertType.objects.all(),
+        },
+    )
 
 
 @login_required
@@ -36,3 +43,18 @@ def create_advert(request):
         form = NewAdvertForm()
 
     return render(request, "adverts/new.html", {"form": form})
+
+
+def view_advert(request, pk):
+    try:
+        advert = Advert.objects.get(pk=pk)
+        return render(
+            request,
+            "adverts/view.html",
+            {
+                "advert": advert,
+            },
+        )
+    except Advert.DoesNotExist:
+        messages.error(request, "Запрашиваемое вами объявление не найдено")
+        return redirect(reverse("index"))
