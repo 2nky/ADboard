@@ -2,13 +2,14 @@
 
 {% block content %}
     <h1>Список объявлений</h1>
+    <a href="{% url 'create_advert' %}" class="btn btn-primary" role="button">Добавить новое</a>
     <table class="table">
         <thead>
             <tr>
                 <th>Категория</th>
                 <th>Автор</th>
                 <th>Заголовок</th>
-                <th>Отзывы</th>
+                <th>Отклики</th>
             </tr>
         </thead>
         <tbody>
