@@ -14,4 +14,8 @@
     <div>
     {{ advert.text }}
     </div>
+
+    {% if request.user == advert.author %}
+        <a href="{% url 'edit_advert' pk=advert.pk %}" class="btn btn-primary" role="button">Редактировать</a>
+    {% endif %}
 {% endblock %}

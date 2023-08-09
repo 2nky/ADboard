@@ -58,3 +58,34 @@ def view_advert(request, pk):
     except Advert.DoesNotExist:
         messages.error(request, "Запрашиваемое вами объявление не найдено")
         return redirect(reverse("index"))
+
+
+@login_required
+def edit_advert(request, pk):
+    try:
+        advert = Advert.objects.get(pk=pk)
+        if request.method == "GET":
+            form = NewAdvertForm(instance=advert)
+        else:
+            form = NewAdvertForm(request.POST)
+            if form.is_valid():
+                advert.header = form.cleaned_data["header"]
+                advert.text = form.cleaned_data["text"]
+                advert.category = form.cleaned_data["category"]
+                advert.save()
+
+                messages.success(request, "Изменения в объявления внесены!")
+
+                return redirect(reverse("view_advert", kwargs={"pk": advert.pk}))
+
+        return render(
+            request,
+            "adverts/edit.html",
+            {
+                "form": form,
+                "advert": advert,
+            },
+        )
+    except Advert.DoesNotExist:
+        messages.error(request, "Запрашиваемое вами объявление не найдено")
+        return redirect(reverse("index"))
