@@ -23,6 +23,10 @@ class Advert(Model):
         blank=False,
         on_delete=models.CASCADE,
     )
+    created_at = models.DateTimeField(
+        verbose_name="Дата создания",
+        auto_now_add=True,
+    )
     category = models.ForeignKey(
         AdvertType,
         verbose_name="Категория",

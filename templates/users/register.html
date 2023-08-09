@@ -1,15 +1,13 @@
-{% load bootstrap5 %}
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
 
-{% bootstrap_css %}
-{% bootstrap_javascript %}
-{% bootstrap_messages %}
+{% block title %}Регистрация{% endblock %}
 
-
+{% block content %}
 <form action="/users/register/" method="post" class="form">
     {% csrf_token %}
     {% bootstrap_form form %}
-    {% buttons %}
-        <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
-    {% endbuttons %}
+    <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
 	<p class="text-center">Если вы уже зарегистрированы, <a href="/login">войдите в систему</a>.</p>
 </form>
+{% endblock content %}

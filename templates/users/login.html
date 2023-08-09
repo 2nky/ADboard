@@ -1,12 +1,14 @@
-{% load bootstrap5 %}
+{% extends "base.html" %}
 
-{% bootstrap_css %}
-{% bootstrap_javascript %}
-{% bootstrap_messages %}
+{% load django_bootstrap5 %}
 
+{% block title %}Вход в системы{% endblock title %}
+
+{% block content %}
 <form action="/users/login/" method="post" class="form">
     {% csrf_token %}
     {% bootstrap_form login_form %}
     <button class="btn btn-primary" type="submit">Войти</button>
     <p>Если вы ещё не зарегистрированы в системе, пройдите по <a href="{% url 'register_user' %}">этой ссылке</a>.</p>
 </form>
+{% endblock %}
