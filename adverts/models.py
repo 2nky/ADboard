@@ -55,3 +55,32 @@ class Advert(Model):
     class Meta:
         verbose_name = "Объявление"
         verbose_name_plural = "Объявления"
+
+
+class Reply(Model):
+    author = models.ForeignKey(
+        User,
+        verbose_name="Автор отклика",
+        null=False,
+        blank=False,
+        on_delete=models.CASCADE,
+    )
+    advert = models.ForeignKey(
+        Advert,
+        verbose_name="На объявление",
+        null=False,
+        blank=False,
+        on_delete=models.CASCADE,
+    )
+    text = models.TextField(
+        verbose_name="Текст отклика",
+        null=False,
+        blank=False,
+    )
+
+    def __str__(self):
+        return f"{self.author.username} на '{self.advert.header}' (символов: {len(self.text)})"
+
+    class Meta:
+        verbose_name = "Отклик на объявление"
+        verbose_name_plural = "Отклики на объявления"

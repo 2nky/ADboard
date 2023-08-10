@@ -72,11 +72,6 @@ def confirm_user(request, code):
         pass
 
 
-@login_required
-def placeholder(request):
-    return render(request, "users/placeholder.html")
-
-
 def login_user(request):
     if request.method == "POST":
         form = AuthenticationForm(

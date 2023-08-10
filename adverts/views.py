@@ -1,9 +1,10 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.http import HttpResponseNotFound
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 
-from adverts.forms import NewAdvertForm
+from adverts.forms import NewAdvertForm, ReplyForm
 from adverts.models import Advert, AdvertType
 
 
@@ -89,3 +90,34 @@ def edit_advert(request, pk):
     except Advert.DoesNotExist:
         messages.error(request, "Запрашиваемое вами объявление не найдено")
         return redirect(reverse("index"))
+
+
+@login_required
+def create_reply(request, advert_pk):
+    advert = get_object_or_404(Advert, pk=advert_pk)
+
+    form = None
+    if request.method == "POST":
+        form = ReplyForm(request.POST)
+        # commit=False нужен чтобы поля заполнить
+        if form.is_valid():
+            reply = form.save(commit=False)
+            reply.author = request.user
+            reply.advert = advert
+            reply.save()
+
+            messages.success(request, "Ваш отклик был сохранён!")
+            return redirect(reverse("view_advert", kwargs={"pk": advert_pk}))
+        else:
+            messages.error(request, "При обработке вашего отклика были ошибки!")
+    else:
+        form = ReplyForm()
+
+    return render(
+        request,
+        "replies/new.html",
+        {
+            "form": form,
+            "advert": advert,
+        },
+    )
