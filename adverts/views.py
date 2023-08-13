@@ -1,6 +1,5 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseNotFound
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 
@@ -148,3 +147,30 @@ def view_reply(request, reply_pk):
             "reply": reply,
         },
     )
+
+
+@login_required
+def accept_reply(request, reply_pk):
+    reply = get_object_or_404(Reply, pk=reply_pk)
+
+    if request.user == reply.advert.author:
+        reply.accepted = True
+        reply.save()
+
+        messages.success(request, f"Вы приняли отклик от {reply.author.username}")
+    else:
+        messages.error(request, "Вы не автор объявления, вы не можете принять отклик!")
+
+    return redirect(
+        reverse(
+            "view_reply",
+            kwargs={
+                "reply_pk": reply.pk,
+            },
+        )
+    )
+
+
+@login_required
+def delete_reply(request, reply_pk):
+    raise NotImplemented

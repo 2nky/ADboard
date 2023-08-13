@@ -16,7 +16,7 @@
     {{ advert.text }}
     </div>
 
-    <h1>Отклик</h1>
+    <h1>Отклик{% if reply.accepted %}  <span class="badge text-bg-success">Принят</span>{% endif %}</h1>
     <div>
         <b>Автор:</b> <b><i>{{ reply.author.username }}</i></b>
     </div>
@@ -24,5 +24,9 @@
     <div>
     {{ reply.text }}
     </div>
+
+    {% if not reply.accepted %}
+        <a href="{% url 'accept_reply' reply.pk %}" class="btn btn-success">Принять отклик</a>
+    {% endif %}
 
 {% endblock %}

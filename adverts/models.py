@@ -81,6 +81,10 @@ class Reply(Model):
         null=False,
         blank=False,
     )
+    accepted = models.BooleanField(
+        verbose_name="Принято",
+        default=False,
+    )
 
     def __str__(self):
         return f"{self.author.username} на '{self.advert.header}' (символов: {len(self.text)})"
