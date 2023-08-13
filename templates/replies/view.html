@@ -28,5 +28,6 @@
     {% if not reply.accepted %}
         <a href="{% url 'accept_reply' reply.pk %}" class="btn btn-success">Принять отклик</a>
     {% endif %}
+    <a href="{% url 'delete_reply' reply.pk %}" class="btn btn-danger">Удалить отклик</a>
 
 {% endblock %}

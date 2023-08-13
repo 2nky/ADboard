@@ -173,4 +173,26 @@ def accept_reply(request, reply_pk):
 
 @login_required
 def delete_reply(request, reply_pk):
-    raise NotImplemented
+    reply = get_object_or_404(Reply, pk=reply_pk)
+
+    if request.user == reply.advert.author:
+        reply.delete()
+
+        messages.success(
+            request,
+            f"Вы успешно удалили отклик от {reply.author.username}",
+        )
+        return redirect(reverse("list_replies"))
+    else:
+        messages.error(
+            request,
+            f"Вы не можете удалить отклик не на своё объявления!",
+        )
+        return redirect(
+            reverse(
+                "view_reply",
+                kwargs={
+                    "reply_pk": reply.pk,
+                },
+            )
+        )
