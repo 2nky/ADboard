@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Просмотр откликов{% endblock %}
+
+{% block content %}
+    <table class="table">
+      <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Автор</th>
+            <th scope="col">Дата создания</th>
+            <th scope="col">Объявление</th>
+            <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for reply in replies %}
+        <tr>
+            <th scope="row">{{ reply.pk }}</th>
+            <td><b>{{ reply.author.username }}</b></td>
+            <td>{{ reply.created_at | date:"d/m/Y G:H:s" }}</td>
+            <td>{{ reply.advert.header }}</td>
+            <td> <a href="{% url 'view_reply' reply.pk %}" class="btn btn-primary">Просмотреть</a></td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Просмотр отклика{% endblock %}
+
+{% block content %}
+    <h1>Объявление</h1>
+    <h2>{{ advert.header }}</h2>
+    <div>
+        <b>Автор:</b> <b><i>{{ advert.author.username }}</i></b>
+    </div>
+    <div>
+        <b>Категория:</b> {{ advert.category.name }}
+    </div>
+    <div><b>Текст:</b></div>
+    <div>
+    {{ advert.text }}
+    </div>
+
+    <h1>Отклик</h1>
+    <div>
+        <b>Автор:</b> <b><i>{{ reply.author.username }}</i></b>
+    </div>
+    <div><b>Текст:</b></div>
+    <div>
+    {{ reply.text }}
+    </div>
+
+{% endblock %}

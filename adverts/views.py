@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 
 from adverts.forms import NewAdvertForm, ReplyForm
-from adverts.models import Advert, AdvertType
+from adverts.models import Advert, AdvertType, Reply
 
 
 def index(request):
@@ -119,5 +119,32 @@ def create_reply(request, advert_pk):
         {
             "form": form,
             "advert": advert,
+        },
+    )
+
+
+@login_required
+def list_replies(request):
+    replies = Reply.objects.filter(advert__author=request.user)
+
+    return render(
+        request,
+        "replies/list.html",
+        context={
+            "replies": replies,
+        },
+    )
+
+
+@login_required
+def view_reply(request, reply_pk):
+    reply = get_object_or_404(Reply, pk=reply_pk)
+
+    return render(
+        request,
+        "replies/view.html",
+        context={
+            "advert": reply.advert,
+            "reply": reply,
         },
     )
