@@ -58,6 +58,10 @@ class Advert(Model):
 
 
 class Reply(Model):
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name="Дата создания",
+    )
     author = models.ForeignKey(
         User,
         verbose_name="Автор отклика",
