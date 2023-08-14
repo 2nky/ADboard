@@ -21,9 +21,11 @@
                   <li class="nav-item">
                       <a class="nav-link" href="{% url "index" %}">Все объявления</a>
                   </li>
+                  {% if not request.user.is_anonymous %}
                   <li class="nav-item">
                       <a class="nav-link" href="{% url "list_replies" %}">Отклики</a>
                   </li>
+                  {% endif %}
               </ul>
               <form class="d-flex" role="search">
                   {% if request.user.is_anonymous %}

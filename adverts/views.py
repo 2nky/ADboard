@@ -50,11 +50,19 @@ def create_advert(request):
 def view_advert(request, pk):
     try:
         advert = Advert.objects.get(pk=pk)
+
+        your_reply = False
+        if not request.user.is_anonymous:
+            your_reply = Reply.objects.filter(
+                advert=advert, author=request.user
+            ).first()
+
         return render(
             request,
             "adverts/view.html",
             {
                 "advert": advert,
+                "your_reply": your_reply,
             },
         )
     except Advert.DoesNotExist:

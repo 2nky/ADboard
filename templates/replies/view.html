@@ -25,7 +25,7 @@
     {{ reply.text }}
     </div>
 
-    {% if not reply.accepted %}
+    {% if request.user == reply.advert.author and not reply.accepted %}
         <a href="{% url 'accept_reply' reply.pk %}" class="btn btn-success">Принять отклик</a>
         <a href="{% url 'delete_reply' reply.pk %}" class="btn btn-danger">Удалить отклик</a>
     {% endif %}

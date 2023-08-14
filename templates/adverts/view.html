@@ -18,6 +18,10 @@
     {% if request.user == advert.author %}
         <a href="{% url 'edit_advert' pk=advert.pk %}" class="btn btn-primary" role="button">Редактировать</a>
     {% else %}
-        <a href="{% url 'create_reply' advert_pk=advert.pk %}" class="btn btn-primary" role="button">Откликнуться</a>
+        {% if your_reply %}
+            <a href="{% url 'view_reply' reply_pk=your_reply.pk %}" class="btn btn-primary" role="button">Просмотреть ваш отклик</a>
+        {% else %}
+            <a href="{% url 'create_reply' advert_pk=advert.pk %}" class="btn btn-primary" role="button">Откликнуться</a>
+        {% endif %}
     {% endif %}
 {% endblock %}
