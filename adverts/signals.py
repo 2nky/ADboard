@@ -1,5 +1,5 @@
 from django.core.mail import send_mail
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from django.template.loader import render_to_string
 
@@ -38,3 +38,26 @@ def notify_new_reply(sender, instance, **kwargs):
         [instance.advert.author.email],
         fail_silently=False,
     )
+
+
+@receiver(pre_save, sender=Reply)
+def notify_reply_accepted(sender, instance, **kwargs):
+    # Все новые отклики не приняты по умолчанию
+    if instance.id is None:
+        return
+
+    previous = Reply.objects.get(pk=instance.pk)
+    if instance.accepted and not previous.accepted:
+        send_mail(
+            "Ваш отклик был принят!",
+            render_to_string(
+                template_name="replies/reply_accepted.txt",
+                context={
+                    "reply": instance,
+                    "advert": instance.advert,
+                },
+            ),
+            "noreply@adboard.fake",
+            [instance.author.email],
+            fail_silently=False,
+        )
