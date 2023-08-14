@@ -18,7 +18,7 @@
                 <td>{{ ad.category.name }}</td>
                 <td><b>{{ ad.author.username }}</b></td>
                 <td><a href="{% url 'view_advert' pk=ad.pk %}">{{ ad.header }}</a></td>
-                <td>0</td>
+                <td>{{ ad.reply__count }}</td>
             </tr>
         {% endfor %}
         </tbody>

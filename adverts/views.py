@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 
@@ -8,7 +9,8 @@ from adverts.models import Advert, AdvertType, Reply
 
 
 def index(request):
-    all_adverts = Advert.objects.all().order_by("-created_at")
+    # Вместе с каждым объявлением в списке будем отдавать количество откликов
+    all_adverts = Advert.objects.all().annotate(Count("reply")).order_by("-created_at")
     return render(
         request,
         "adverts/list.html",
