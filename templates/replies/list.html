@@ -4,6 +4,19 @@
 
 {% block content %}
     {% if replies %}
+        <div>
+            <form action="{% url "list_replies" %}">
+                <label for="filter_by">Объявление:</label>
+                <select id="filter_by" name="filter_by">
+                    <option value="">------------</option>
+                    {% for pk, header in adverts_to_filter %}
+                    <option value="{{ pk }}" {% if pk == current_filter_pk %} selected{% endif %}>{{ header }}</option>
+                    {% endfor %}
+                </select>
+                <input type="submit" value="Фильтровать" class="btn btn-primary">
+            </form>
+        </div>
+
         <table class="table">
           <thead>
             <tr>

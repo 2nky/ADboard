@@ -127,12 +127,19 @@ def create_reply(request, advert_pk):
 @login_required
 def list_replies(request):
     replies = Reply.objects.filter(advert__author=request.user)
+    adverts_to_filter = replies.values_list("advert__pk", "advert__header").distinct()
+
+    filter_by_advert_pk = int(request.GET.get("filter_by", 0))
+    if filter_by_advert_pk:
+        replies = replies.filter(advert__pk=filter_by_advert_pk)
 
     return render(
         request,
         "replies/list.html",
         context={
             "replies": replies,
+            "adverts_to_filter": adverts_to_filter,
+            "current_filter_pk": filter_by_advert_pk,
         },
     )
 
