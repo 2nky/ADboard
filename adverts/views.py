@@ -54,7 +54,8 @@ def view_advert(request, pk):
         your_reply = False
         if not request.user.is_anonymous:
             your_reply = Reply.objects.filter(
-                advert=advert, author=request.user
+                advert=advert,
+                author=request.user,
             ).first()
 
         return render(

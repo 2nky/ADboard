@@ -12,7 +12,7 @@
     </div>
     <div><b>Текст:</b></div>
     <div>
-    {{ advert.text }}
+    {{ advert.text | safe }}
     </div>
 
     {% if request.user == advert.author %}

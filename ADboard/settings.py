@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "django_bootstrap5",
     "users",
     "adverts",
+    "ckeditor",
 ]
 
 MIDDLEWARE = [
@@ -129,3 +130,5 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 LOGIN_URL = "/users/login/"
 LOGIN_REDIRECT_URL = "/users/login/"
+
+STATIC_ROOT = BASE_DIR / "static"
